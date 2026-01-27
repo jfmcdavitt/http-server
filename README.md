@@ -1,10 +1,10 @@
 # http-server
 
 ## TODO List
-- [] Create Basic Server using C sockets
-- [] Create logging functionality for the Server 
-- [] Create JSON Parser 
-- [] Add Multiprocessing 
+- [x] Create Basic Server using C sockets
+- [ ] Create logging functionality for the Server 
+- [ ] Create JSON Parser 
+- [ ] Add Multiprocessing 
 
 
 ## Resources
