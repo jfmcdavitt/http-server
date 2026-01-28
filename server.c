@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <sys/types.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <time.h>
-
-
 
 /* Error Reporting */
 void error(char *msg)
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
   /* Make sure a port is provided when setting up the server */
   if (argc < 2)
   {
-    fprintf(stderr, "ERROR, no port provided");
+    fprintf(stderr, "ERROR, no port provided\n");
     exit(1);
   }
 
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
   /* If the value returned is less than 0, there was an error */
   if (sockfd < 0) {
-    error("ERROR opening socket");
+    error("ERROR opening socket\n");
   }
   
   /* Initialize the server address struct to zeros */ 
@@ -58,21 +58,21 @@ int main(int argc, char *argv[])
 
   serv_addr.sin_port = htons(portno);
 
-  serv_addr.sin_addr.s_ddr = INADDR_ANY;
+  serv_addr.sin_addr.s_addr = INADDR_ANY;
 
   if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) 
   {
-    error("ERROR on binding");
+    error("ERROR on binding\n");
   }
 
   listen(sockfd, 5);
 
   clilen = sizeof(cli_addr);
   
-  newsockfd = accept(sockfd, (struct sockaddr *), &cli_addr, &clilen);
+  newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
   
   if (newsockfd < 0) {
-    error("ERROR on accept");
+    error("ERROR on accept\n");
   }
 
   bzero(buffer, 256);
@@ -81,14 +81,14 @@ int main(int argc, char *argv[])
 
   if (n < 0) 
   {
-     error("ERROR reading from socket");
+     error("ERROR reading from socket\n");
   }
 
-  printf("Here is the message %s", buffer);
+  printf("Here is the message\n---\n%s\n---\n", buffer);
 
   n = write(newsockfd, "I got your message", 18);
   if (n < 0) {
-    error("ERROR writing to socket");
+    error("ERROR writing to socket\n");
   }
 
   return 0;
